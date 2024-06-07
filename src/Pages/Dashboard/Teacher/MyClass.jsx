@@ -1,69 +1,38 @@
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import useAuth from '../../../Hooks/useAuth';
 
 const MyClass = () => {
-    return (
-        <>
-     
-  
-        <div className='container mx-auto px-4 sm:px-8'>
-          <div className='py-8'>
-            <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
-              <div className='inline-block min-w-full shadow rounded-lg overflow-hidden'>
-                <table className='min-w-full leading-normal'>
-                  <thead>
-                    <tr>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        Title
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        Location
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        Price
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        From
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        To
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        Delete
-                      </th>
-                      <th
-                        scope='col'
-                        className='px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal'
-                      >
-                        Update
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>{/* Room row data */}</tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+  const { user } = useAuth();
+
+  const { data: classes = [], isLoading, isError, error } = useQuery({
+    queryKey: ['myclass', user?.email],
+    queryFn: async () => {
+      const response = await fetch(`http://localhost:5000/myclass/${user?.email}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    },
+    enabled: !!user?.email, // Ensure the query runs only if user.email is available
+  });
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div>
+      <p>Total classes: {classes.length}</p>
+      {classes.map((classItem) => (
+        <p key={classItem._id}>{classItem.title}</p>
+      ))}
+    </div>
+  );
 };
 
 export default MyClass;

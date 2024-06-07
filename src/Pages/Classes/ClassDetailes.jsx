@@ -31,27 +31,32 @@ const ClassDetailes = () => {
     
     return (
         <div>
-            <div className="bg-[#2D2F31]  h-[400px]">
-              <div className="flex  pt-44">
-
-                <h4 className="font-Briem text-white text-7xl pt-20 pl-56 pb-11">{classDetailes.title}</h4>
-                <img className="h-[300px] w-[400px] ml-20 bg-cover" src={classDetailes.image} alt="" />
-              </div>
-
-            </div>
-            <div>
-                <h4 className="font-Briem text-black text-4xl mt-20 pl-56 pb-5">{classDetailes.title}</h4>
-                <h4 className="font-Briem text-black text-2xl  pl-56 ">{classDetailes.shortDescription}</h4>
-                <h4 className="font-Briem text-black text-xl  pl-56 ">{classDetailes.postedBy}</h4>
-                <h4 className="font-Briem text-red-600 text-xl  pl-56 ">{classDetailes.price}</h4>
-                <Link>
-            <div className="card-actions">
-              <button className="btn btn-outline rounded-lg ml-56  ">Pay Now</button>
-            </div>
-          </Link>
-
-            </div>
+        <div className="bg-[#2D2F31] h-[400px] flex items-center justify-center">
+          <div className="flex items-center space-x-20 px-10">
+            <h4 className="font-Briem text-white text-7xl">{classDetailes.title}</h4>
+            <img
+              className="h-[300px] w-[400px] object-cover rounded-lg shadow-lg mt-40 "
+              src={classDetailes.image}
+              alt={classDetailes.title}
+            />
+          </div>
         </div>
+        <div className="px-10 py-20 bg-white">
+          <div className="max-w-4xl mx-auto space-y-5">
+            <h4 className="font-Briem text-black text-4xl">{classDetailes.title}</h4>
+            <p className="font-Briem text-gray-700 text-2xl">{classDetailes.shortDescription}</p>
+            <p className="font-Briem text-gray-600 text-xl">Posted by: {classDetailes.postedBy}</p>
+            <p className="font-Briem text-red-600 text-xl">Price: ${classDetailes.price}</p>
+            <Link to={`/pay/${classDetailes._id}`}>
+              <div className="card-actions">
+                <button className="btn btn-outline rounded-lg px-6 py-2 border-2 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition duration-300">
+                  Pay Now
+                </button>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
     );
 };
 
