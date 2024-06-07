@@ -97,7 +97,13 @@ if (isError) {
                 <h2 className="card-title text-2xl font-semibold text-gray-800">{classItem.title}</h2>
                 <p className="text-lg text-gray-600 mt-2">Price: ${classItem.price}</p>
                 <p className="text-gray-600 mt-2">{classItem.shortDescription}</p>
-                <p className="text-gray-500 mt-4">Posted by: {classItem.postedBy}</p>
+               {/* posted by */}
+               <p className="text-gray-600 ">Posted By:</p>
+
+          <div className="flex items-center justify-center gap-2">
+            <img src={classItem.photo} alt={classItem.postedBy} className="w-10 h-10 rounded-full object-cover" />
+            <p className="text-gray-500"> {classItem.postedBy}</p>
+          </div>
                 <p className="text-gray-500 mt-2">Total Enrollment: {classItem.totalEnrollment}</p>
                 <div className='flex gap-3 mt-4'>
                   <div>

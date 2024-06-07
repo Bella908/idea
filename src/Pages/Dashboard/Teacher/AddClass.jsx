@@ -15,7 +15,8 @@ const AddClass = () => {
     email: '',
     price: '',
     shortDescription: '',
-    image: ''
+    image: '',
+    photo: ''
   });
 
   useEffect(() => {
@@ -23,7 +24,9 @@ const AddClass = () => {
       setFormData((prevFormData) => ({
         ...prevFormData,
         postedBy: user.displayName || '',
-        email: user.email || ''
+        email: user.email || '',
+        photo: user.photoURL || '',
+
       }));
     }
   }, [user]);
@@ -36,6 +39,7 @@ const AddClass = () => {
     });
   };
 
+ 
   const mutation = useMutation({
     mutationFn: (formData) => {
       return fetch('http://localhost:5000/classes', {
