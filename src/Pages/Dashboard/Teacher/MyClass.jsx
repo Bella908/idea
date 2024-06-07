@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const MyClass = () => {
   const { user } = useAuth();
+  const [list, setlist] = useState([]);
+  
+
 
   const { data: classes = [], isLoading, isError, error } = useQuery({
     queryKey: ['myclass', user?.email],
@@ -15,16 +19,67 @@ const MyClass = () => {
       }
       return response.json();
     },
-    enabled: !!user?.email, // Ensure the query runs only if user.email is available
+    enabled: !!user?.email,
+    onSuccess: (data) => setlist(data), // Ensure the query runs only if user.email is available
   });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  
+  
+  
+ 
 
-  if (isError) {
-    return <div>Error: {error.message}</div>;
-  }
+
+  // delect function
+  const handleDelete = async (id) => {
+    // Display SweetAlert confirmation dialog
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            fetch(`http://localhost:5000/myclass/delete/${id}`, {
+                method: "DELETE",
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        
+                      setlist(prevBookings => prevBookings.filter( classItem => classItem._id!== id));
+                    
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Your file has been deleted.",
+                            icon: "success"
+                        });
+            
+                    }
+                });
+        }
+    });
+    
+
+
+};
+
+
+if (isLoading) {
+  return <div>Loading...</div>;
+}
+
+if (isError) {
+  return <div>Error: {error.message}</div>;
+}
+
+
+
+
+
 
   return (
     <div>
@@ -55,7 +110,7 @@ const MyClass = () => {
                 </Link>
                   </div>
                   <div>
-                  <Link to={`/class/${classItem.id}`} className="mt-6">
+                  <Link to={`${classItem._id}`} className="mt-6">
                   <div className="card-actions">
                     <button className="btn bg-[#3D52A0] text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
                    See details
@@ -64,13 +119,13 @@ const MyClass = () => {
                 </Link>
                   </div>
                   <div>
-                  <Link to={`/class/${classItem.id}`} className="mt-6">
+                    {/* delet */}
+               
                   <div className="card-actions">
-                    <button className="btn bg-red-800 text-white font-semibold py-2 px-4 rounded-lg  hover:bg-slate-400 transition duration-300">
-                    Delete
-                    </button>
+                   
+                    <button onClick={() => handleDelete(classItem._id)} className="btn bg-red-800 text-white font-semibold py-2 px-4 rounded-lg  hover:bg-slate-400 transition duration-300"> Delete</button>
                   </div>
-                </Link>
+              
                   </div>
                 </div>
                 

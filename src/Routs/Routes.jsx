@@ -8,6 +8,7 @@ import ClassDetailes from "../Pages/Classes/ClassDetailes";
 import Dashboard from "../Layout/Dashboard";
 import AddClass from "../Pages/Dashboard/Teacher/AddClass";
 import MyClass from "../Pages/Dashboard/Teacher/MyClass";
+import SeeDetails from "../Pages/Dashboard/Teacher/MyClass/SeeDetails";
 
 
 const router = createBrowserRouter([
@@ -59,6 +60,12 @@ const router = createBrowserRouter([
        
         path: "myClass",
         element:<MyClass></MyClass>
+      },
+      {
+
+        path: 'myclass/:id',
+        element: <SeeDetails></SeeDetails>,
+
       },
      
     ]
