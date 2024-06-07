@@ -19,7 +19,7 @@ const Navbar = () => {
         <>
             <li className='hover:text-[#FF8BD2]  transition-colors duration-300 font-Briem'><Link to='/'>Home</Link></li>
             <li className='hover:text-[#FF8BD2]  transition-colors duration-300 font-Briem'><Link to='/allclasses'>All Classes</Link></li>
-            <li className='hover:text-[#FF8BD2]  transition-colors duration-300 font-Briem'><Link to='/'>Teach on IDEA</Link></li>
+            <li className='hover:text-[#FF8BD2]  transition-colors duration-300 font-Briem'><Link to='/teach'>Teach on IDEA</Link></li>
         </>
     return (
         <div>
