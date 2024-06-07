@@ -2,7 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../FireBase/FireBase.int";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-
+import axios from 'axios'
 
 
 
@@ -14,16 +14,6 @@ const AuthProvider = ({children}) => {
 
 const googleAuthProvider = new GoogleAuthProvider();
 
-useEffect(() => {
-    const unSubscribe =  onAuthStateChanged(auth, currentUser => {
-         console.log('user is the auth state changed', currentUser);
-         setUser(currentUser);
-         setLoading(false);
-     });
-     return() =>{
-        unSubscribe() ;
-     }
- }, [])
 
 
 const sighIn = (email , password) =>{
@@ -47,6 +37,40 @@ const googleLogin = () =>{
         return createUserWithEmailAndPassword(auth, email, password);
     }
     
+// save a user
+
+const saveUser = async user => {
+    const currentUser = {
+      email: user?.email,
+      role: 'guest',
+      status: 'Verified',
+    }
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_API_URL}/user`,
+      currentUser
+    )
+    return data
+  }
+
+  useEffect(() => {
+    const unSubscribe =  onAuthStateChanged(auth, currentUser => {
+         console.log('user is the auth state changed', currentUser);
+         setUser(currentUser);
+         if (currentUser) {
+            
+            saveUser(currentUser)
+          }
+         
+         setLoading(false);
+     });
+     return() =>{
+        unSubscribe() ;
+     }
+ }, [])
+
+
+
+
 
     const userInfo ={
         user,
