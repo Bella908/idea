@@ -6,11 +6,12 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
+
 const TeachOn = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
-
+  
   const initialFormData = {
     full_name: '',
     email: '',
