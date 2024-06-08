@@ -10,6 +10,8 @@ import logo from '../../assets/logo2.png'
 import { Link } from 'react-router-dom'
 import useAuth from '../../Hooks/useAuth'
 import useRole from '../../Hooks/useRole';
+import Menu from './Menu/Menu';
+import TeacherMenu from './Menu/TeacherMenu';
 
 
 
@@ -27,7 +29,7 @@ const Sidebar = () => {
   }
 
 
-// role
+  // role
 
 
 
@@ -81,35 +83,13 @@ const Sidebar = () => {
 
             {/*  Menu Items */}
             <nav>
-              {/* Statistics */}
+             
+
+             {/* teacher menu */}
+             {role ==='teacher' &&   <TeacherMenu></TeacherMenu> }
+             <TeacherMenu></TeacherMenu>
 
 
-              {/* Add Room */}
-              <NavLink
-                to='addClass'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#7091E6]   hover:text-white ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-
-                <IoMdAddCircle className='w-5 h-5' />
-
-                <span className='mx-4 font-medium'>Add Class</span>
-              </NavLink>
-              {/* My Listing */}
-              <NavLink
-                to='myClass'
-                className={({ isActive }) =>
-                  `flex items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-[#7091E6]   hover:text-white ${isActive ? 'bg-gray-300  text-gray-700' : 'text-gray-600'
-                  }`
-                }
-              >
-
-                <SiGoogleclassroom className='w-5 h-5' />
-
-                <span className='mx-4 font-medium'>My Class</span>
-              </NavLink>
             </nav>
           </div>
         </div>
