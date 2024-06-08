@@ -12,6 +12,8 @@ import useAuth from '../../Hooks/useAuth'
 import useRole from '../../Hooks/useRole';
 import Menu from './Menu/Menu';
 import TeacherMenu from './Menu/TeacherMenu';
+import AdminMenu from './Menu/AdminMenu';
+import StudentMenu from './Menu/StudentMenu';
 
 
 
@@ -86,8 +88,10 @@ const Sidebar = () => {
              
 
              {/* teacher menu */}
+             {role ==='admin' && <AdminMenu></AdminMenu> }
              {role ==='teacher' &&   <TeacherMenu></TeacherMenu> }
-             <TeacherMenu></TeacherMenu>
+             {role ==='student' && <StudentMenu></StudentMenu> }
+           
 
 
             </nav>

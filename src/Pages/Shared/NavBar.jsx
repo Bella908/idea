@@ -58,11 +58,11 @@ const Navbar = () => {
       <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-12 rounded-full">
-          <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
+          <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
         </div>
       </div>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li className='p-4'>{user.displayName}</li>
+        <li className='p-4'>{user?.displayName}</li>
         <Link to='/dashboard'><li><a>Dashboard</a></li></Link>
         <li><a onClick={handleSignOut}>Logout</a></li>
       </ul>

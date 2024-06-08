@@ -42,7 +42,9 @@ const googleLogin = () =>{
 const saveUser = async user => {
     const currentUser = {
       email: user?.email,
-      role: 'guest',
+      name: user?.displayName,
+      photoURL:user?.photoURL,
+      role: 'student',
       status: 'Verified',
     }
     const { data } = await axios.put(
@@ -51,6 +53,8 @@ const saveUser = async user => {
     )
     return data
   }
+
+  console.log(user)
 
   useEffect(() => {
     const unSubscribe =  onAuthStateChanged(auth, currentUser => {
