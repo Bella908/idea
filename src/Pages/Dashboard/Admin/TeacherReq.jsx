@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../../Shared/LoadingSpnner";
 import { useState } from "react";
 import axios from "axios";
+import { MdOutlineDelete } from "react-icons/md";
 
 const TeacherReq = () => {
   const queryClient = useQueryClient();
@@ -31,6 +32,7 @@ const TeacherReq = () => {
     },
     onError: (err) => {
       toast.error(err.message);
+      queryClient.invalidateQueries(['teacherReq']);
     },
   });
 
@@ -38,6 +40,21 @@ const TeacherReq = () => {
     const userRole = {
       id: user._id,
       userStatus: 'Accepted',
+    };
+
+    setSelectedUser(user);
+
+    try {
+      await mutation.mutateAsync(userRole);
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
+  const handleReject = async (user) => {
+    const userRole = {
+      id: user._id,
+      userStatus: 'Rejected',
     };
 
     setSelectedUser(user);
@@ -83,11 +100,13 @@ const TeacherReq = () => {
                 <td>{user.category}</td>
                 <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                   {user?.status ? (
-                    <p className={`${user.status === 'Accepted' ? 'text-green-500' : 'text-yellow-500'} whitespace-no-wrap`}>
+                    <p className={`${user.status === 'Accepted' ? 'text-green-500' : user.status === 'Rejected' ? 'text-red-500' : 'text-yellow-500'} whitespace-no-wrap`}>
                       {user.status}
                     </p>
                   ) : (
-                    <p className='text-red-500 whitespace-no-wrap'>Unavailable</p>
+                    <p className='text-yellow-500 whitespace-no-wrap'>
+                      Pending
+                    </p>
                   )}
                 </td>
                 <td>
@@ -95,9 +114,16 @@ const TeacherReq = () => {
                     <button
                       className='btn bg-green-100'
                       onClick={() => handleApprove(user)}
-                      disabled={user.status === 'Accepted'}
+                      disabled={user.status === 'Accepted' || user.status === 'Rejected'}
                     >
                       <FcApproval />
+                    </button>
+                    <button
+                      className='btn text-red-700 bg-red-100'
+                      onClick={() => handleReject(user)}
+                      disabled={user.status === 'Accepted' || user.status === 'Rejected'}
+                    >
+                      <MdOutlineDelete />
                     </button>
                   </div>
                 </td>
