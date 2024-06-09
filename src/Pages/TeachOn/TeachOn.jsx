@@ -6,12 +6,12 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
-
 const TeachOn = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
-  
+  const navigate = useNavigate(); // Initialize navigate
+
   const initialFormData = {
     full_name: '',
     email: '',
@@ -27,7 +27,6 @@ const TeachOn = () => {
     if (user) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-      
         email: user.email || '',
         photo: user.photoURL || '',
       }));
@@ -51,7 +50,6 @@ const TeachOn = () => {
       };
       const { data } = await axios.put('http://localhost:5000/user', currentUser);
       console.log(data);
-      
     } catch (error) {
       console.error('Error updating user:', error);
     }
@@ -80,6 +78,7 @@ const TeachOn = () => {
         text: 'The review has been sent successfully!',
       });
       setFormData(initialFormData); // Reset form data
+      navigate('/'); // Navigate to the main page
     },
     onError: (error) => {
       Swal.fire({
@@ -90,10 +89,14 @@ const TeachOn = () => {
     },
   });
 
-  const handleAddClass = (e) => {
+  const handleAddClass = async (e) => {
     e.preventDefault();
-    console.log(handelRequest()); // Call handelRequest here
-    mutation.mutate(formData);
+    const updatedFormData = {
+      ...formData,
+      status: 'pending', // Add status to the form data
+    };
+    await handelRequest(); // Call handelRequest here
+    mutation.mutate(updatedFormData);
   };
 
   if (!user) {

@@ -12,6 +12,7 @@ import SeeDetails from "../Pages/Dashboard/Teacher/MyClass/SeeDetails";
 import TeachOn from "../Pages/TeachOn/TeachOn";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
+import TeacherReq from "../Pages/Dashboard/Admin/TeacherReq";
 
 
 const router = createBrowserRouter([
@@ -74,6 +75,13 @@ const router = createBrowserRouter([
 
         path: 'myclass/:id',
         element: <SeeDetails></SeeDetails>,
+
+      },
+     
+      {
+
+        path: 'teachOn',
+        element: <TeacherReq></TeacherReq>,
 
       },
      

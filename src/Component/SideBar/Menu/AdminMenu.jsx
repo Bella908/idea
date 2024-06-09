@@ -8,7 +8,7 @@ const AdminMenu = () => {
     return (
         <div>
              <>
-      <Menu icon={VscRequestChanges } label='Teacher Request' address='teacherReq' />
+      <Menu icon={VscRequestChanges } label='Teacher Request' address='teachOn' />
       <Menu icon={FaRegUserCircle } label='Users' address='users' />
       <Menu icon={ SiGoogleclassroom } label=' All classes' address='allClass' />
      
