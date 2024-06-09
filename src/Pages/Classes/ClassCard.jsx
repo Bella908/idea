@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
 
 const ClassCard = ({ classData }) => {
+  const {user} = useAuth();
   const {
     _id,
     title,
@@ -30,13 +32,28 @@ const ClassCard = ({ classData }) => {
             <p className="text-gray-500"> {postedBy}</p>
           </div>
           <p className="text-gray-500 mt-2">Total Enrollment: {totalEnrollment}</p>
-          <Link to={`/class/${_id}`} className="mt-6">
+
+          {
+                        user?
+                        <>
+                       <Link to={`/class/${_id}`} className="mt-6">
             <div className="card-actions">
               <button className="btn bg-amber-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
                 Enroll Now
               </button>
             </div>
           </Link>
+                      
+                        </> :
+
+                  <>
+                  <Link to="/login">
+                  
+                    <button className="btn bg-[#043BD4] text-white">Enroll Now</button>
+                  </Link>   
+                  </>   
+                    }
+          
         </div>
       </div>
     </div>

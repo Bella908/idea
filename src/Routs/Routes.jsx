@@ -13,6 +13,8 @@ import TeachOn from "../Pages/TeachOn/TeachOn";
 import Profile from "../Pages/Dashboard/Common/Profile";
 import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import TeacherReq from "../Pages/Dashboard/Admin/TeacherReq";
+import ProtectedRout from "./PrivatRoute/ProtectedRout";
+import TeacherRoute from "./TeacherRoute";
 
 
 const router = createBrowserRouter([
@@ -52,50 +54,74 @@ const router = createBrowserRouter([
       {
 
         path: '/teach',
-        element: <TeachOn></TeachOn>,
+        element:
+        <ProtectedRout>
+          <TeachOn></TeachOn>
+          </ProtectedRout> ,
 
       },
     ]
   },
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element:   <ProtectedRout>
+    <Dashboard></Dashboard>
+    </ProtectedRout> ,
     children: [
       {
       
         path: "addClass",
-        element: <AddClass></AddClass>
+        element:<ProtectedRout>
+          <TeacherRoute>
+        <AddClass></AddClass>
+
+          </TeacherRoute>
+        </ProtectedRout> 
       },
       {
        
         path: "myClass",
-        element:<MyClass></MyClass>
+        element:
+        <ProtectedRout>
+          <TeacherRoute>
+
+       <MyClass></MyClass>
+          </TeacherRoute>
+        </ProtectedRout>
       },
       {
 
         path: 'myclass/:id',
-        element: <SeeDetails></SeeDetails>,
+        element: <ProtectedRout>
+       <SeeDetails></SeeDetails>,
+        </ProtectedRout> 
 
       },
      
       {
 
         path: 'teachOn',
-        element: <TeacherReq></TeacherReq>,
+        element: <ProtectedRout>
+       <TeacherReq></TeacherReq>
+        </ProtectedRout> ,
 
       },
      
       {
 
         path: 'users',
-        element: <ManageUser></ManageUser>,
+        element: <ProtectedRout>
+       <ManageUser></ManageUser>,
+        </ProtectedRout> 
 
       },
      
       {
 
         path: 'profile',
-        element: <Profile></Profile>,
+        element:  <ProtectedRout>
+       <Profile></Profile>
+        </ProtectedRout>,
 
       }
      
