@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useRole from '../../Hooks/useRole';
 
 const TeachOn = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
+  const {user:role} = useAuth();
 
   const initialFormData = {
     full_name: '',
@@ -18,10 +20,12 @@ const TeachOn = () => {
     title: '',
     experience: '',
     category: '',
-    photo: ''
+    photo: '',
   };
 
   const [formData, setFormData] = useState(initialFormData);
+  const [userStatus, setUserStatus] = useState('');
+  const [userRole] = useRole();
 
   useEffect(() => {
     if (user) {
@@ -29,7 +33,19 @@ const TeachOn = () => {
         ...prevFormData,
         email: user.email || '',
         photo: user.photoURL || '',
+        userId: role._id || '',
       }));
+
+      const fetchUserStatus = async () => {
+        try {
+          const { data } = await axios.get(`http://localhost:5000/user/status?email=${user.email}`);
+          setUserStatus(data.status);
+        } catch (error) {
+          console.error('Error fetching user status:', error);
+        }
+      };
+
+      fetchUserStatus();
     }
   }, [user]);
 
@@ -37,16 +53,18 @@ const TeachOn = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handelRequest = async () => {
+
+  const handleRequest = async () => {
     try {
       const currentUser = {
         email: user?.email,
-        role: 'guest',
+        role: 'teacher',
         status: 'Requested',
+        userId: role._id , // Ensure userId is included
       };
       const { data } = await axios.put('http://localhost:5000/user', currentUser);
       console.log(data);
@@ -54,6 +72,7 @@ const TeachOn = () => {
       console.error('Error updating user:', error);
     }
   };
+  
 
   const mutation = useMutation({
     mutationFn: (formData) => {
@@ -77,8 +96,8 @@ const TeachOn = () => {
         title: 'Submitted',
         text: 'The review has been sent successfully!',
       });
-      setFormData(initialFormData); // Reset form data
-      navigate('/'); // Navigate to the main page
+      setFormData(initialFormData);
+      navigate('/');
     },
     onError: (error) => {
       Swal.fire({
@@ -93,14 +112,30 @@ const TeachOn = () => {
     e.preventDefault();
     const updatedFormData = {
       ...formData,
-      status: 'pending', // Add status to the form data
+      status: 'pending',
+      
     };
-    await handelRequest(); // Call handelRequest here
+    await handleRequest();
     mutation.mutate(updatedFormData);
   };
+  
 
   if (!user) {
-    return <div>Loading...</div>; // or any other loading indicator
+    return <div>Loading...</div>;
+  }
+
+  if (userRole === 'teacher') {
+    return (
+      <div className="min-h-screen p-6 bg-[#7091E6] flex items-center justify-center pt-36">
+        <div className="container max-w-screen-lg mx-auto">
+          <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+            <h2 className="font-semibold text-3xl text-center text-green-500">
+              You are already a teacher!
+            </h2>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -192,7 +227,7 @@ const TeachOn = () => {
                   <div className="md:col-span-5 text-right">
                     <div className="inline-flex items-end">
                       <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Submit for review
+                        {userStatus === 'rejected' ? 'Request Again' : 'Submit for review'}
                       </button>
                     </div>
                   </div>

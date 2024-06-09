@@ -3,6 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../Hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { MdDelete, MdUpdate } from 'react-icons/md';
+import { FcViewDetails } from 'react-icons/fc';
+import { TbListDetails } from 'react-icons/tb';
 
 const MyClass = () => {
   const { user } = useAuth();
@@ -104,13 +107,22 @@ if (isError) {
             <img src={classItem.photo} alt={classItem.postedBy} className="w-10 h-10 rounded-full object-cover" />
             <p className="text-gray-500"> {classItem.postedBy}</p>
           </div>
+          {classItem?.status ? (
+                    <p className={`${classItem.status === 'Accepted' ? 'text-green-500' : classItem.status === 'Rejected' ? 'text-red-500' : 'text-yellow-500'} whitespace-no-wrap`}>
+                      {classItem.status}
+                    </p>
+                  ) : (
+                    <p className='text-yellow-500 whitespace-no-wrap'>
+                      Pending
+                    </p>
+                  )}
                 <p className="text-gray-500 mt-2">Total Enrollment: {classItem.totalEnrollment}</p>
                 <div className='flex gap-3 mt-4'>
                   <div>
                   <Link to={`/class/${classItem.id}`} className="mt-6">
                   <div className="card-actions">
-                    <button className="btn bg-[#7091E6] text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
-                    Update
+                    <button className="btn bg-yellow-100 text-yellow-600 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
+                    <MdUpdate />
                     </button>
                   </div>
                 </Link>
@@ -118,8 +130,8 @@ if (isError) {
                   <div>
                   <Link to={`${classItem._id}`} className="mt-6">
                   <div className="card-actions">
-                    <button className="btn bg-[#3D52A0] text-white font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
-                   See details
+                    <button className="btn text-blue-800 bg-blue-100 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
+                    <TbListDetails />
                     </button>
                   </div>
                 </Link>
@@ -129,7 +141,7 @@ if (isError) {
                
                   <div className="card-actions">
                    
-                    <button onClick={() => handleDelete(classItem._id)} className="btn bg-red-800 text-white font-semibold py-2 px-4 rounded-lg  hover:bg-slate-400 transition duration-300"> Delete</button>
+                    <button onClick={() => handleDelete(classItem._id)} className="btn bg-red-200 text-red-800 font-semibold py-2 px-4 rounded-lg  hover:bg-slate-400 transition duration-300"> <MdDelete/></button>
                   </div>
               
                   </div>

@@ -1,9 +1,10 @@
 import React from 'react';
 import useRole from '../Hooks/useRole';
-import { useRouteLoaderData } from 'react-router-dom';
+import { Navigate, useRouteLoaderData } from 'react-router-dom';
+import LoadingSpinner from '../Pages/Shared/LoadingSpnner';
 
-const TeacherRoute = () => {
-    const [role, isLoading] = useRouteLoaderData()
+const TeacherRoute = ({children}) => {
+    const [role, isLoading] = useRole();
 
   if (isLoading) return <LoadingSpinner />
   if (role === 'teacher') return children

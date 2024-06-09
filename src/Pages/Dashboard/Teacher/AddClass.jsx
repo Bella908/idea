@@ -26,7 +26,6 @@ const AddClass = () => {
         postedBy: user.displayName || '',
         email: user.email || '',
         photo: user.photoURL || '',
-
       }));
     }
   }, [user]);
@@ -39,7 +38,6 @@ const AddClass = () => {
     });
   };
 
- 
   const mutation = useMutation({
     mutationFn: (formData) => {
       return fetch('http://localhost:5000/classes', {
@@ -76,7 +74,12 @@ const AddClass = () => {
 
   const handleAddClass = (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    // Create a new formData object that includes the status
+    const updatedFormData = {
+      ...formData,
+      status: 'pending',
+    };
+    mutation.mutate(updatedFormData);
   };
 
   return (

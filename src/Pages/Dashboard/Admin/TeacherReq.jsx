@@ -27,7 +27,7 @@ const TeacherReq = () => {
       return data;
     },
     onSuccess: (data) => {
-      toast.success('User role updated successfully!');
+      toast.success('Accepted!');
       queryClient.invalidateQueries(['teacherReq']); // This will trigger a refetch
     },
     onError: (err) => {

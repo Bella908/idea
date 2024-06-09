@@ -15,6 +15,9 @@ import ManageUser from "../Pages/Dashboard/Admin/ManageUser";
 import TeacherReq from "../Pages/Dashboard/Admin/TeacherReq";
 import ProtectedRout from "./PrivatRoute/ProtectedRout";
 import TeacherRoute from "./TeacherRoute";
+import AdminRoute from "./AdminRoute";
+import AddedClassAdmin from "../Pages/Dashboard/Admin/AddedClassAdmin";
+
 
 
 const router = createBrowserRouter([
@@ -93,16 +96,35 @@ const router = createBrowserRouter([
 
         path: 'myclass/:id',
         element: <ProtectedRout>
+          <TeacherRoute>
        <SeeDetails></SeeDetails>,
+
+          </TeacherRoute>
         </ProtectedRout> 
 
       },
+     
      
       {
 
         path: 'teachOn',
         element: <ProtectedRout>
+          <AdminRoute>
        <TeacherReq></TeacherReq>
+
+          </AdminRoute>
+        </ProtectedRout> ,
+
+      },
+     
+      {
+
+        path: 'addedClass',
+        element: <ProtectedRout>
+          <AdminRoute>
+       <AddedClassAdmin></AddedClassAdmin>
+
+          </AdminRoute>
         </ProtectedRout> ,
 
       },
@@ -111,7 +133,10 @@ const router = createBrowserRouter([
 
         path: 'users',
         element: <ProtectedRout>
+          <AdminRoute>
+
        <ManageUser></ManageUser>,
+          </AdminRoute>
         </ProtectedRout> 
 
       },

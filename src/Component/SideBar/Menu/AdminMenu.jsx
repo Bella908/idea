@@ -10,7 +10,7 @@ const AdminMenu = () => {
              <>
       <Menu icon={VscRequestChanges } label='Teacher Request' address='teachOn' />
       <Menu icon={FaRegUserCircle } label='Users' address='users' />
-      <Menu icon={ SiGoogleclassroom } label=' All classes' address='allClass' />
+      <Menu icon={ SiGoogleclassroom } label=' All classes' address='addedClass' />
      
     </>
         </div>

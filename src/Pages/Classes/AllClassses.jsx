@@ -23,28 +23,30 @@ const AllClasses = () => {
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <div>Error fetching classes</div>;
 
+    // Filter accepted classes
+    const acceptedClasses = classes.filter((classData) => classData.status === 'Accepted');
+
     return (
         <div>
             {/* Hero section */}
-            <div className="hero h-[800px]" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'}}>
+            <div className="hero h-[800px]" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)' }}>
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-md">
                         <h1 className="mb-5 text-5xl font-bold">Classes</h1>
-                        <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                        <button className="btn btn-primary">Get Started</button>
+                       
                     </div>
                 </div>
             </div>
             {/* Classes Cards */}
             <div>
-                {classes && classes.length > 0 ? (
+                {acceptedClasses && acceptedClasses.length > 0 ? (
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-1 justify-center'>
-                        {classes.map(c => <ClassCard key={c._id} classData={c} />)}
+                        {acceptedClasses.map((classData) => <ClassCard key={classData._id} classData={classData} />)}
                     </div>
                 ) : (
                     <div>
-                        <h3>Nothing to display</h3>
+                        <h3 className='text-center text-3xl font-bold m-52'>No accepted classes available</h3>
                     </div>
                 )}
             </div>
