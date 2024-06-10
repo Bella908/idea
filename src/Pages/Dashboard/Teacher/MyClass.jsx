@@ -9,7 +9,7 @@ import { TbListDetails } from 'react-icons/tb';
 const MyClass = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [list, setlist] = useState([]);
+  const [list, setList] = useState([]);
 
   const { data: classes = [], isLoading, isError, error } = useQuery({
     queryKey: ['myclass', user?.email],
@@ -21,7 +21,7 @@ const MyClass = () => {
       return response.json();
     },
     enabled: !!user?.email,
-    onSuccess: (data) => setlist(data), // Ensure the query runs only if user.email is available
+    onSuccess: (data) => setList(data), // Ensure the query runs only if user.email is available
   });
 
   // Delete function
@@ -42,7 +42,7 @@ const MyClass = () => {
           .then(res => res.json())
           .then(data => {
             if (data.deletedCount > 0) {
-              setlist(prevClasses => prevClasses.filter(classItem => classItem._id !== id));
+              setList(prevClasses => prevClasses.filter(classItem => classItem._id !== id));
               Swal.fire({
                 title: "Deleted!",
                 text: "Your class has been deleted.",
@@ -72,7 +72,7 @@ const MyClass = () => {
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4 justify-center'>
         {classes.map((classItem) => (
-          <div key={classItem.id} className='flex justify-center mt-10'>
+          <div key={classItem._id} className='flex justify-center mt-10'>
             <div className="card w-[500px] bg-white shadow-lg ring-1 ring-slate-400 rounded-lg overflow-hidden transform transition duration-300 hover:scale-105">
               <figure className="px-10 pt-10">
                 <img src={classItem.image} alt={classItem.title} className="rounded-lg object-cover h-48 w-full" />
@@ -98,7 +98,7 @@ const MyClass = () => {
                 <p className="text-gray-500 mt-2">Total Enrollment: {classItem.totalEnrollment}</p>
                 <div className='flex gap-3 mt-4'>
                   <div>
-                    <Link to={`/class/${classItem.id}`} className="mt-6">
+                    <Link to={`/class/${classItem._id}`} className="mt-6">
                       <div className="card-actions">
                         <button className="btn bg-yellow-100 text-yellow-600 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
                           <MdUpdate />
@@ -107,16 +107,26 @@ const MyClass = () => {
                     </Link>
                   </div>
                   <div>
-                    <Link to={`${classItem._id}`} className="mt-6">
+                    {classItem.status !== 'Accepted' ? (
                       <div className="card-actions">
                         <button 
                           className="btn text-blue-800 bg-blue-100 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300"
-                          disabled={classItem.status !== 'Accepted'}
+                          disabled
                         >
                           <TbListDetails />
                         </button>
                       </div>
-                    </Link>
+                    ) : (
+                      <Link to={`${classItem._id}`} className="mt-6">
+                        <div className="card-actions">
+                          <button 
+                            className="btn text-blue-800 bg-blue-100 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300"
+                          >
+                            <TbListDetails />
+                          </button>
+                        </div>
+                      </Link>
+                    )}
                   </div>
                   <div>
                     <div className="card-actions">

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../Shared/LoadingSpnner";
-import { MdOutlinePayment } from "react-icons/md";
+import useAuth from "../../Hooks/useAuth";
 
 const ClassDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
-    const [paymentDetails, setPaymentDetails] = useState({ classId: id });
+    const [paymentDetails, setPaymentDetails] = useState({ classId: id, email: '' }); // Initialize email state
+    const { user } = useAuth();
     const { data: classDetails = {}, isLoading, isError } = useQuery({
         queryKey: ["classDetails", id],
         queryFn: async () => {
@@ -29,6 +32,11 @@ const ClassDetails = () => {
         setIsOpen(false);
     };
 
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setPaymentDetails({ ...paymentDetails, [name]: value });
+    };
+
     const handleConfirmPayment = async (event) => {
         event.preventDefault();
         const { title, image, postedBy, price } = classDetails;
@@ -38,6 +46,7 @@ const ClassDetails = () => {
             postedBy,
             price,
             classId: id,
+            email: user.email, // Include email in payment data
         };
 
         try {
@@ -54,6 +63,7 @@ const ClassDetails = () => {
             const result = await response.json();
             console.log('Payment confirmed:', result);
             setIsOpen(false);
+            navigate('/dashboard/enrollClass'); // Navigate to the enrollclass route after successful payment
         } catch (error) {
             console.error('Error posting payment details:', error);
         }
@@ -61,7 +71,6 @@ const ClassDetails = () => {
 
     if (isLoading) return <LoadingSpinner />;
     if (isError) return <div>Error fetching classes</div>;
-
     return (
         <div>
             <div className="bg-[#2D2F31] h-[400px] flex items-center justify-center">
@@ -81,7 +90,7 @@ const ClassDetails = () => {
                     <p className="font-Briem text-gray-600 text-xl">Posted by: {classDetails.postedBy}</p>
                     <p className="font-Briem text-red-600 text-xl">Price: ${classDetails.price}</p>
                     <button className="btn bg-blue-100 text-blue-500" onClick={() => setIsOpen(true)}>
-                    <MdOutlinePayment /> Pay
+                        <MdOutlinePayment /> Pay
                     </button>
                     {isOpen && (
                         <div className="fixed inset-0 z-10 overflow-y-auto">

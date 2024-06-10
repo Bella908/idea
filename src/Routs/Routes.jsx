@@ -19,6 +19,8 @@ import AdminRoute from "./AdminRoute";
 import AddedClassAdmin from "../Pages/Dashboard/Admin/AddedClassAdmin";
 import StudentRoute from "./StudentRoute";
 import MyEnrollClass from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClass";
+import MyEnrollClassDetails from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClassDetails";
+import Assigment from "../Pages/Dashboard/Student/detailsPage/Assigment";
 
 
 
@@ -154,6 +156,17 @@ const router = createBrowserRouter([
         </ProtectedRout> 
 
       },
+      {
+
+        path: 'enrollClass/:classId',
+        element: <ProtectedRout>
+          <StudentRoute>
+            <MyEnrollClassDetails></MyEnrollClassDetails>
+          </StudentRoute>
+        </ProtectedRout> 
+
+      },
+     
      
       {
 
