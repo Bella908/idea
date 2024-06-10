@@ -21,6 +21,7 @@ import StudentRoute from "./StudentRoute";
 import MyEnrollClass from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClass";
 import MyEnrollClassDetails from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClassDetails";
 import Assigment from "../Pages/Dashboard/Student/detailsPage/Assigment";
+import SelectedFeedBack from "../Pages/Dashboard/Admin/SelectedFeedBack";
 
 
 
@@ -146,6 +147,19 @@ const router = createBrowserRouter([
         </ProtectedRout> 
 
       },
+      {
+
+        path: 'addedClass/:id',
+        element: <ProtectedRout>
+          <AdminRoute>
+
+       <SelectedFeedBack></SelectedFeedBack>,
+          </AdminRoute>
+        </ProtectedRout> 
+
+      },
+
+
       {
 
         path: 'enrollClass',

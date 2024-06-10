@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineReviews } from 'react-icons/md';
 import { IoMdSend } from 'react-icons/io';
 import ReactStars from 'react-rating-stars-component';
 import Heading from '../../../Shared/Heading';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../Shared/LoadingSpnner';
+import useAuth from '../../../../Hooks/useAuth';
 import { useParams } from 'react-router-dom';
+
 
 const MyEnrollClassDetails = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState({ description: '', rating: 0 });
-    const { classId } = useParams();
-    console.log(classId);
+    const [formData, setFormData] = useState({ description: '', rating: 0, userName: '', userImage: '' });
+    const { user } = useAuth();
+    const {classId} = useParams();
+    console.log(classId)
 
-    // const { data: assignment = [], isLoading: isLoadingAssignments, isError: isErrorAssignments, error: assignmentError } = useQuery({
-    //     queryKey: ['assignment', classId],
-    //     queryFn: async () => {
-    //         try {
-    //             const response = await fetch(`http://localhost:5000/enrollClass/${classId}`);
-    //             if (!response.ok) {
-    //                 const errorMessage = await response.text();
-    //                 throw new Error(`Network response was not ok: ${errorMessage}`);
-    //             }
-    //             return response.json();
-    //         } catch (error) {
-    //             console.error('Error fetching assignments:', error);
-    //             throw new Error('Failed to fetch assignments');
-    //         }
-    //     },
-    // });
+    useEffect(() => {
+        if (user) {
+            setFormData((prevData) => ({
+                ...prevData,
+                userName: user.displayName,
+                userImage: user.photoURL,
+            }));
+        }
+    }, [user]);
+
+    const { data: assignment = [], isLoading: isLoadingAssignments, isError: isErrorAssignments } = useQuery({
+        queryKey: ['assignment'],
+        queryFn: async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/assignment`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            } catch (error) {
+                console.error('Error fetching assignments:', error);
+                throw new Error('Failed to fetch assignments');
+            }
+        },
+    });
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -41,21 +53,23 @@ const MyEnrollClassDetails = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         try {
             const response = await fetch('http://localhost:5000/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    classId: classId // Assuming classId is defined somewhere in your component or fetched from props
+                }),
             });
-
+    
             if (!response.ok) {
-                const errorMessage = await response.text();
-                throw new Error(`Network response was not ok: ${errorMessage}`);
+                throw new Error('Network response was not ok');
             }
-
+    
             const result = await response.json();
             console.log('Feedback submitted:', result);
             setIsOpen(false);
@@ -63,14 +77,16 @@ const MyEnrollClassDetails = () => {
             console.error('Error submitting feedback:', error);
         }
     };
+    
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString(undefined, options);
     };
 
-    // if (isLoadingAssignments) return <LoadingSpinner />;
-    // if (isErrorAssignments) return <div>Error fetching assignments: {assignmentError.message}</div>;
+    const filteredFeedback = assignment.filter(feed => feed.classId === classId);
+
+
 
     return (
         <div>
@@ -87,7 +103,7 @@ const MyEnrollClassDetails = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {assignment.map((assign) => (
+                            {filteredFeedback.map((assign) => (
                                 <tr key={assign._id}>
                                     <td>{assign.title}</td>
                                     <td>{assign.description}</td>
@@ -103,7 +119,7 @@ const MyEnrollClassDetails = () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))} */}
+                            ))}
                         </tbody>
                     </table>
                 </div>

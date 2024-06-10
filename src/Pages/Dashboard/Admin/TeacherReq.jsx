@@ -26,9 +26,11 @@ const TeacherReq = () => {
       const { data } = await axios.patch(`http://localhost:5000/teachOn/${id}`, { status: userStatus });
       return data;
     },
-    onSuccess: (data) => {
+    onSuccess: async (data, variables) => {
+      // Update the user's role to teacher
+      await axios.patch(`http://localhost:5000/users/${variables.id}`, { role: 'teacher' });
       toast.success('Accepted!');
-      queryClient.invalidateQueries(['teacherReq']); // This will trigger a refetch
+      queryClient.invalidateQueries(['teacherReq']);
     },
     onError: (err) => {
       toast.error(err.message);

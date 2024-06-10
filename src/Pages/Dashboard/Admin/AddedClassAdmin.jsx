@@ -6,6 +6,7 @@ import { MdOutlineDelete } from 'react-icons/md';
 import { GiProgression } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const AddedClassAdmin = () => {
     const queryClient = useQueryClient();
@@ -127,13 +128,26 @@ const AddedClassAdmin = () => {
                 >
                   <MdOutlineDelete />
                 </button>
-                <button
-                  className='btn text-blue-700 bg-blue-100'
-                  onClick={() => handleReject(user)}
-                  disabled={user.status !== 'Accepted'}
-                >
-                  <GiProgression />
-                </button>
+          <div>
+          {user.status !== 'Accepted' ? (
+                     <button
+                     className='btn text-blue-700 bg-blue-100'
+                     disabled={user.status !== 'Accepted'}
+                   >
+                     <GiProgression />
+                   </button>
+                    ) : (
+                      <Link to={`${user._id}`} className="mt-6">
+                        <button
+                     className='btn text-blue-700 bg-blue-100'
+                     disabled={user.status !== 'Accepted'}
+                   >
+                     <GiProgression />
+                   </button>
+                      </Link>
+                    )}
+          </div>
+               
               </div>
             </td>
                 </tr>

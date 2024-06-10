@@ -1,6 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 
 const State = () => {
+
+
+
+  const { data: statData = {}, isLoading } = useQuery({
+    queryKey: ['statData'],
+    queryFn: async () => {
+      const { data } = await axios.get('http://localhost:5000/admin-stat')
+      return data
+    },
+  })
+  console.log(statData)
+
+
+
+
     return (
         <div>
             <div className="hero min-h-[500px] my-20" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'}}>
@@ -11,21 +28,20 @@ const State = () => {
       <div className="stats stats-vertical lg:stats-horizontal shadow">
   
   <div className="stat">
-    <div className="stat-title">Downloads</div>
-    <div className="stat-value">31K</div>
-    <div className="stat-desc">Jan 1st - Feb 1st</div>
+    <div className="stat-title">Total Users</div>
+    <div className="stat-value text-center">{statData.totalClasses}</div>
   </div>
   
   <div className="stat">
-    <div className="stat-title">New Users</div>
-    <div className="stat-value">4,200</div>
-    <div className="stat-desc">↗︎ 400 (22%)</div>
+    <div className="stat-title">Total Classes</div>
+    <div className="stat-value text-center">{statData.totalUsers}</div>
+    
   </div>
   
   <div className="stat">
-    <div className="stat-title">New Registers</div>
-    <div className="stat-value">1,200</div>
-    <div className="stat-desc">↘︎ 90 (14%)</div>
+    <div className="stat-title">Total student enrollment</div>
+    <div className="stat-value text-center">{statData.totalAddClass}</div>
+    
   </div>
   
 </div>
