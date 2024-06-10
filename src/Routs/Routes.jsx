@@ -17,6 +17,9 @@ import ProtectedRout from "./PrivatRoute/ProtectedRout";
 import TeacherRoute from "./TeacherRoute";
 import AdminRoute from "./AdminRoute";
 import AddedClassAdmin from "../Pages/Dashboard/Admin/AddedClassAdmin";
+import StudentRoute from "./StudentRoute";
+import MyEnrollClass from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClass";
+
 
 
 
@@ -54,6 +57,7 @@ const router = createBrowserRouter([
         element: <ClassDetailes></ClassDetailes>,
 
       },
+      
       {
 
         path: '/teach',
@@ -137,6 +141,16 @@ const router = createBrowserRouter([
 
        <ManageUser></ManageUser>,
           </AdminRoute>
+        </ProtectedRout> 
+
+      },
+      {
+
+        path: 'enrollClass',
+        element: <ProtectedRout>
+          <StudentRoute>
+            <MyEnrollClass></MyEnrollClass>
+          </StudentRoute>
         </ProtectedRout> 
 
       },
