@@ -8,7 +8,7 @@ import { FaPlus } from 'react-icons/fa';
 import 'react-datepicker/dist/react-datepicker.css'; // Import the CSS for the date picker
 import Swal from 'sweetalert2'; // Import SweetAlert
 
-const SeeDetails = () => {
+const SeeDetails = ({ classId, teacherId }) => {
     const { id } = useParams();
     const [isOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -78,13 +78,50 @@ const SeeDetails = () => {
         }
     };
 
-    console.log(classDetails.length)
+    const fetchTotalEnrollments = async () => {
+        const response = await fetch(`http://localhost:5000/classes/${classId}/enrollments`);
+        return response.json();
+      };
+    
+      const fetchTotalAssignments = async () => {
+        const response = await fetch(`http://localhost:5000/teachers/${teacherId}/assignments`);
+        return response.json();
+      };
+    
+      const fetchTotalSubmissionsToday = async () => {
+        const response = await fetch(`http://localhost:5000/assignments/${classId}/submissions/today`);
+        return response.json();
+      };
+    
+      const { data: enrollments } = useQuery(['totalEnrollments', classId], fetchTotalEnrollments);
+      const { data: assignments } = useQuery(['totalAssignments', teacherId], fetchTotalAssignments);
+      const { data: submissionsToday } = useQuery(['totalSubmissionsToday', classId], fetchTotalSubmissionsToday);
 
     return (
         <div className="container mx-auto p-4">
             <div className="text-3xl text-center mb-8">
                 Details about <span className="text-[#3D52A0] font-bold">{classDetails.title}</span>
             </div>
+            {/* class details */}
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="card">
+        <h2>Total Enrollment</h2>
+        <p>{enrollments?.totalEnrollments || 0}</p>
+      </div>
+      <div className="card">
+        <h2>Total Assignments</h2>
+        <p>{assignments?.totalAssignments || 0}</p>
+      </div>
+      <div className="card">
+        <h2>Submissions Today</h2>
+        <p>{submissionsToday?.totalSubmissionsToday || 0}</p>
+      </div>
+    </div>
+
+
+
+
             <div>
                 <Heading center={true} title="Classprogress section" />
                 <div className="flex justify-center my-11 "> {/* Flexbox container for centering */}
