@@ -16,7 +16,7 @@ const ClassDetails = () => {
         queryKey: ["classDetails", id],
         queryFn: async () => {
             try {
-                const response = await fetch(`canvas-server-pi.vercel.app/class/${id}`);
+                const response = await fetch(`https://canvas-server-pi.vercel.app/class/${id}`);
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
                 }
@@ -50,7 +50,7 @@ const ClassDetails = () => {
         };
 
         try {
-            const response = await fetch('canvas-server-pi.vercel.app/payment', {
+            const response = await fetch('https://canvas-server-pi.vercel.app/payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,9 +73,9 @@ const ClassDetails = () => {
     if (isError) return <div>Error fetching classes</div>;
     return (
         <div>
-            <div className="bg-[#2D2F31] h-[400px] flex items-center justify-center">
-                <div className="flex items-center space-x-20 px-10">
-                    <h4 className="font-Briem text-white text-7xl">{classDetails.title}</h4>
+            <div className="bg-[#2D2F31] h-[400px] flex items-center justify-center ">
+                <div className="flex items-center space-x-20 px-10 ">
+                    <h4 className="font-Briem text-white text-4xl ">{classDetails.title}</h4>
                     <img
                         className="h-[300px] w-[400px] object-cover rounded-lg shadow-lg mt-40"
                         src={classDetails.image}
@@ -85,7 +85,6 @@ const ClassDetails = () => {
             </div>
             <div className="px-10 py-20 bg-white">
                 <div className="max-w-4xl mx-auto space-y-5">
-                    <h4 className="font-Briem text-black text-4xl">{classDetails.title}</h4>
                     <p className="font-Briem text-gray-700 text-2xl">{classDetails.shortDescription}</p>
                     <p className="font-Briem text-gray-600 text-xl">Posted by: {classDetails.postedBy}</p>
                     <p className="font-Briem text-red-600 text-xl">Price: ${classDetails.price}</p>

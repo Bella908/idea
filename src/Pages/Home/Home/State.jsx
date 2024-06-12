@@ -9,7 +9,7 @@ const State = () => {
   const { data: statData = {}, isLoading } = useQuery({
     queryKey: ['statData'],
     queryFn: async () => {
-      const { data } = await axios.get('canvas-server-pi.vercel.app/admin-stat')
+      const { data } = await axios.get('https://canvas-server-pi.vercel.app/admin-stat')
       return data
     },
   })

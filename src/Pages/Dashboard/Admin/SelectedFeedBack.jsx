@@ -12,7 +12,7 @@ const SelectedFeedBack = () => {
         queryKey: ['feedback', id],
         queryFn: async () => {
             try {
-                const response = await fetch(`canvas-server-pi.vercel.app/feedback`);
+                const response = await fetch(`https://canvas-server-pi.vercel.app/feedback`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

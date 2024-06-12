@@ -12,7 +12,7 @@ const TeachOn = () => {
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const {user:role} = useAuth();
+  const {user:role ,status} = useAuth();
 
   const initialFormData = {
     full_name: '',
@@ -39,7 +39,7 @@ const TeachOn = () => {
 
         const fetchUserStatus = async () => {
             try {
-                const { data } = await axios.get(`canvas-server-pi.vercel.app/user/status?email=${user.email}`);
+                const { data } = await axios.get(`https://canvas-server-pi.vercel.app/user/status?email=${user.email}`);
                 setUserStatus(data?.status || '');
             } catch (error) {
                 console.error('Error fetching user status:', error);
@@ -69,7 +69,7 @@ const TeachOn = () => {
         status: 'Requested',
         userId: role._id , // Ensure userId is included
       };
-      const { data } = await axios.put('canvas-server-pi.vercel.app/user', currentUser);
+      const { data } = await axios.put('https://canvas-server-pi.vercel.app/user', currentUser);
       console.log(data);
     } catch (error) {
       console.error('Error updating user:', error);
@@ -79,7 +79,7 @@ const TeachOn = () => {
 
   const mutation = useMutation({
     mutationFn: (formData) => {
-      return fetch('canvas-server-pi.vercel.app/teachOn', {
+      return fetch('https://canvas-server-pi.vercel.app/teachOn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,7 +230,7 @@ const TeachOn = () => {
                             <div className="md:col-span-5 text-right">
                                 <div className="inline-flex items-end">
                                     <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        {userRole === 'student' ? 'Request Again' : 'Submit for review'}
+                                        {status === 'Verified' ? 'Request Again' : 'Submit for review'}
                                     </button>
                                 </div>
                             </div>

@@ -11,7 +11,7 @@ const PopularMenu = () => {
     queryKey: ['classes'],
     queryFn: async () => {
       try {
-        const response = await fetch('canvas-server-pi.vercel.app/allclasses');
+        const response = await fetch('https://canvas-server-pi.vercel.app/allclasses');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

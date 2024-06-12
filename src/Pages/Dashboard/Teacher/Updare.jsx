@@ -19,7 +19,7 @@ const Update = () => {
         // Fetch the existing class details
         const fetchClassDetails = async () => {
             try {
-                const response = await fetch(`canvas-server-pi.vercel.app/classes/${id}`);
+                const response = await fetch(`https://canvas-server-pi.vercel.app/classes/${id}`);
                 const data = await response.json();
                 setFormData({
                     title: data.title,
@@ -47,7 +47,7 @@ const Update = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`canvas-server-pi.vercel.app/update/${id}`, {
+            const response = await fetch(`https://canvas-server-pi.vercel.app/update/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

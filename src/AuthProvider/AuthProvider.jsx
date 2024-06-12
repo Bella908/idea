@@ -48,7 +48,7 @@ const saveUser = async user => {
       status: 'Verified',
     }
     const { data } = await axios.put(
-      `${import.meta.env.VITE_API_URL}/user`,
+      `https://canvas-server-pi.vercel.app/user`,
       currentUser
     )
     return data

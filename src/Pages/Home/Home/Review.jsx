@@ -7,7 +7,7 @@ const Review = () => {
         queryKey: ['feedback'],
         queryFn: async () => {
             try {
-                const response = await fetch(`canvas-server-pi.vercel.app/feedback`);
+                const response = await fetch(`https://canvas-server-pi.vercel.app/feedback`);
                 if (!response.ok) {
                     const errorMessage = await response.text();
                     throw new Error(`Network response was not ok: ${errorMessage}`);

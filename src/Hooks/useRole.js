@@ -9,7 +9,7 @@ const useRole = () => {
     queryKey: ['role', user?.email],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
-      const { data } = await axios.get(`canvas-server-pi.vercel.app/user/${user?.email}`)
+      const { data } = await axios.get(`https://canvas-server-pi.vercel.app/user/${user?.email}`)
       console.log(data.role)
       return data.role
     },

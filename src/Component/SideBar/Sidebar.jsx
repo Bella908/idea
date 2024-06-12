@@ -46,7 +46,7 @@ const Sidebar = () => {
           <div className='block cursor-pointer p-4 font-bold'>
             <Link to='/'>
               <img
-                // className='hidden md:block'
+                className='hidden md:block'
                 src={logo}
 
               />

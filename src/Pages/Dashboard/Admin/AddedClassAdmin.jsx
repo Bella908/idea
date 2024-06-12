@@ -16,7 +16,7 @@ const AddedClassAdmin = () => {
         queryKey: ['classes'],
         queryFn: async () => {
             try {
-                const response = await fetch('canvas-server-pi.vercel.app/allclasses');
+                const response = await fetch('https://canvas-server-pi.vercel.app/allclasses');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -33,7 +33,7 @@ const AddedClassAdmin = () => {
 
     const mutation = useMutation({
         mutationFn: async ({ id, userStatus }) => {
-          const { data } = await axios.patch(`canvas-server-pi.vercel.app/allclasses/${id}`, { status: userStatus });
+          const { data } = await axios.patch(`https://canvas-server-pi.vercel.app/allclasses/${id}`, { status: userStatus });
           return data;
         },
         onSuccess: (data) => {

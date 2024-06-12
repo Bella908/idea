@@ -40,7 +40,7 @@ const AddClass = () => {
 
   const mutation = useMutation({
     mutationFn: (formData) => {
-      return fetch('canvas-server-pi.vercel.app/classes', {
+      return fetch('https://canvas-server-pi.vercel.app/classes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

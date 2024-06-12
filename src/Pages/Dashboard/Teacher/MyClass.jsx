@@ -14,7 +14,7 @@ const MyClass = () => {
   const { data: classes = [], isLoading, isError, error } = useQuery({
     queryKey: ['myclass', user?.email],
     queryFn: async () => {
-      const response = await fetch(`canvas-server-pi.vercel.app/myclass/${user?.email}`);
+      const response = await fetch(`https://canvas-server-pi.vercel.app/myclass/${user?.email}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -36,7 +36,7 @@ const MyClass = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`canvas-server-pi.vercel.app/myclass/delete/${id}`, {
+        fetch(`https://canvas-server-pi.vercel.app/myclass/delete/${id}`, {
           method: "DELETE",
         })
           .then(res => res.json())
