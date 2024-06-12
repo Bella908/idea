@@ -113,7 +113,7 @@ const router = createBrowserRouter([
       },
       {
 
-        path: 'update/:id',
+        path: 'myclass/update/:id',
         element: <ProtectedRout>
           <TeacherRoute>
        <Updare></Updare>
