@@ -13,7 +13,7 @@ const TeacherReq = () => {
   const { data: teacherReq = [], isLoading, isError, error, refetch } = useQuery({
     queryKey: ['teacherReq'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:5000/teachOn');
+      const response = await fetch('canvas-server-pi.vercel.app/teachOn');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -23,13 +23,13 @@ const TeacherReq = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ id, userStatus }) => {
-      const { data } = await axios.patch(`http://localhost:5000/teachOn/${id}`, { status: userStatus });
+      const { data } = await axios.patch(`canvas-server-pi.vercel.app/teachOn/${id}`, { status: userStatus });
       return data;
     },
     onSuccess: async (data, variables) => {
       if (variables.userStatus === 'Accepted') {
         // Update the user's role to teacher if the status is Accepted
-        await axios.patch(`http://localhost:5000/users/update/${selectedUser?.email}`, { role: 'teacher' });
+        await axios.patch(`canvas-server-pi.vercel.app/users/update/${selectedUser?.email}`, { role: 'teacher' });
       }
 
       queryClient.invalidateQueries(['teacherReq']);

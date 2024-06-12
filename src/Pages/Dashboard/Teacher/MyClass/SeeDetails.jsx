@@ -21,7 +21,7 @@ const SeeDetails = () => {
         queryKey: ['classDetails', id],
         queryFn: async () => {
             try {
-                const response = await fetch(`http://localhost:5000/class/${id}`);
+                const response = await fetch(`canvas-server-pi.vercel.app/class/${id}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -38,7 +38,7 @@ const SeeDetails = () => {
         queryKey: ['classDetails', id],
         queryFn: async () => {
             try {
-                const response = await fetch(`http://localhost:5000/assignment/${id}`);
+                const response = await fetch(`canvas-server-pi.vercel.app/assignment/${id}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -78,7 +78,7 @@ const SeeDetails = () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:5000/assignment/${id}`, {
+            const response = await fetch(`canvas-server-pi.vercel.app/assignment/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

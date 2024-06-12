@@ -30,7 +30,7 @@ const MyEnrollClassDetails = () => {
         queryKey: ['assignment'],
         queryFn: async () => {
             try {
-                const response = await fetch(`http://localhost:5000/assignment`);
+                const response = await fetch(`canvas-server-pi.vercel.app/assignment`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -55,7 +55,7 @@ const MyEnrollClassDetails = () => {
         event.preventDefault();
     
         try {
-            const response = await fetch('http://localhost:5000/feedback', {
+            const response = await fetch('canvas-server-pi.vercel.app/feedback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

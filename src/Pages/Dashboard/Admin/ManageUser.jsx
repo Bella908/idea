@@ -11,7 +11,7 @@ const ManageUser = () => {
 
   const mutation = useMutation({
     mutationFn: async (userRole) => {
-      const { data } = await axios.patch(`http://localhost:5000/users/update/${selectedUser?.email}`, userRole);
+      const { data } = await axios.patch(`canvas-server-pi.vercel.app/users/update/${selectedUser?.email}`, userRole);
       return data;
     },
     onSuccess: (data) => {
@@ -46,7 +46,7 @@ const ManageUser = () => {
   const { data: users = [], isLoading, isError, error, refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const response = await fetch('http://localhost:5000/users');
+      const response = await fetch('canvas-server-pi.vercel.app/users');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

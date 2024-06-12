@@ -11,7 +11,7 @@ const MyEnrollClass = () => {
         queryKey: ['enrolledClasses'],
         queryFn: async () => {
             try {
-                const response = await fetch('http://localhost:5000/enrollClass');
+                const response = await fetch('canvas-server-pi.vercel.app/enrollClass');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

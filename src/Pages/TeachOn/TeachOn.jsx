@@ -39,7 +39,7 @@ const TeachOn = () => {
 
         const fetchUserStatus = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5000/user/status?email=${user.email}`);
+                const { data } = await axios.get(`canvas-server-pi.vercel.app/user/status?email=${user.email}`);
                 setUserStatus(data?.status || '');
             } catch (error) {
                 console.error('Error fetching user status:', error);
@@ -69,7 +69,7 @@ const TeachOn = () => {
         status: 'Requested',
         userId: role._id , // Ensure userId is included
       };
-      const { data } = await axios.put('http://localhost:5000/user', currentUser);
+      const { data } = await axios.put('canvas-server-pi.vercel.app/user', currentUser);
       console.log(data);
     } catch (error) {
       console.error('Error updating user:', error);
@@ -79,7 +79,7 @@ const TeachOn = () => {
 
   const mutation = useMutation({
     mutationFn: (formData) => {
-      return fetch('http://localhost:5000/teachOn', {
+      return fetch('canvas-server-pi.vercel.app/teachOn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
