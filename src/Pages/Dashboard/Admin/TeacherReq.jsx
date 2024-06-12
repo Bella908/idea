@@ -27,9 +27,11 @@ const TeacherReq = () => {
       return data;
     },
     onSuccess: async (data, variables) => {
-      // Update the user's role to teacher
-      await axios.patch(`http://localhost:5000/users/${variables.id}`, { role: 'teacher' });
-      toast.success('Accepted!');
+      if (variables.userStatus === 'Accepted') {
+        // Update the user's role to teacher if the status is Accepted
+        await axios.patch(`http://localhost:5000/users/update/${selectedUser?.email}`, { role: 'teacher' });
+      }
+
       queryClient.invalidateQueries(['teacherReq']);
     },
     onError: (err) => {

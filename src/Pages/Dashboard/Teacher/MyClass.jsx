@@ -98,7 +98,7 @@ const MyClass = () => {
                 <p className="text-gray-500 mt-2">Total Enrollment: {classItem.totalEnrollment}</p>
                 <div className='flex gap-3 mt-4'>
                   <div>
-                    <Link to={`/class/${classItem._id}`} className="mt-6">
+                    <Link to={`/update/${classItem._id}`} className="mt-6">
                       <div className="card-actions">
                         <button className="btn bg-yellow-100 text-yellow-600 font-semibold py-2 px-4 rounded-lg hover:bg-slate-400 transition duration-300">
                           <MdUpdate />

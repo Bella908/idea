@@ -22,6 +22,7 @@ import MyEnrollClass from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClass"
 import MyEnrollClassDetails from "../Pages/Dashboard/Student/EnrollClass/MyEnrollClassDetails";
 import Assigment from "../Pages/Dashboard/Student/detailsPage/Assigment";
 import SelectedFeedBack from "../Pages/Dashboard/Admin/SelectedFeedBack";
+import Updare from "../Pages/Dashboard/Teacher/Updare";
 
 
 
@@ -105,6 +106,17 @@ const router = createBrowserRouter([
         element: <ProtectedRout>
           <TeacherRoute>
        <SeeDetails></SeeDetails>,
+
+          </TeacherRoute>
+        </ProtectedRout> 
+
+      },
+      {
+
+        path: 'update/:id',
+        element: <ProtectedRout>
+          <TeacherRoute>
+       <Updare></Updare>
 
           </TeacherRoute>
         </ProtectedRout> 

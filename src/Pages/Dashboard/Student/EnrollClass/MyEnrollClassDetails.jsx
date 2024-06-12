@@ -80,8 +80,12 @@ const MyEnrollClassDetails = () => {
     
 
     const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        if (isNaN(date)) {
+            return 'Invalid Date';
+        }
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        return new Date(dateString).toLocaleDateString(undefined, options);
+        return date.toLocaleDateString(undefined, options);
     };
 
     const filteredFeedback = assignment.filter(feed => feed.classId === classId);
@@ -107,7 +111,7 @@ const MyEnrollClassDetails = () => {
                                 <tr key={assign._id}>
                                     <td>{assign.title}</td>
                                     <td>{assign.description}</td>
-                                    <td>{formatDate(assign.deadline)}</td>
+                                    <td>{formatDate(assign.startDate)}</td>
                                     <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                                         <div className="flex gap-3">
                                             <button
