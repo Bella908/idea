@@ -2,6 +2,14 @@
 
 Idea  is an educational management platform designed to streamline and enhance the interaction between academic institutions, tutors, and students. 
 
+Admin Credentials
+- Username: kira
+- User-email: kira@gmail.com
+- Password: Kira123
+
+# Live Site URL
+- [Idea Live site](https://thriving-snickerdoodle-b65ffc.netlify.app/)
+
 <h2>Problem solved by IDEA</h2>
 <ul>
   <li>
@@ -70,11 +78,59 @@ Idea  is an educational management platform designed to streamline and enhance t
   
 </p>
 
-Admin Credentials
-- Username: kira
-- User-email: kira@gmail.com
-- Password: Kira123
+<h2>Steps to Clone and Run EduManage Locally</h2>
+<p>To clone and run the EduManage project locally, follow these steps:</p>
+<ul>
+  <li>Prerequisites
+Ensure you have the following installed on your machine:
 
-# Live Site URL
-- [Idea Live site](https://thriving-snickerdoodle-b65ffc.netlify.app/)
+- Node.js: Download and install from Node.js official website.
+- Git: Download and install from Git official website.</li>
+</ul>
+<ul>
+  <li>
+    Clone the Repository:
+   
+  -  Open your terminal or command prompt and run the following command to clone the repository:
+
+
+
+          git clone https://github.com/your-username/edumanage.git
+Replace your-username with the actual username of the repository owner.
+  </li>
+</ul>
+<ul>
+  <li>
+  Navigate to the Project Directory:
+       
+    
+    `cd idea`
+    
+  </li>
+</ul>
+<ul>
+  <li>
+     Install Dependencies:
+
+<p>Install the dependencies for both the client and server sides.</p> 
+
+  
+   Install Tailwind CSS
+    
+        npm install -D tailwindcss
+  
+
+ 
+   Install daisyUI as a Node package:
+   
+        npm i -D daisyui@latest
+   To run the project
+
+     npm run dev
+  
+  </li>
+</ul>
+
+
+
 
